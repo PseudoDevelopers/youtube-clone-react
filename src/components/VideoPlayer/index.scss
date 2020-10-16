@@ -1,0 +1,9 @@
+@import '../variables';
+
+.skeleton {
+    h2 {
+        width: 350px;
+        height: 25px;
+        background: $skeleton-clr;
+    }
+}
