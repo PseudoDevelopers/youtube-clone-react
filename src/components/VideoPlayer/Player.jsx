@@ -23,9 +23,13 @@ class Player extends React.Component {
 
         return (
             <PlayerDiv id="player">
-                {videoId !== '' ? this.iframe() : ''}
+                {videoId !== null ? this.iframe() : ''}
             </PlayerDiv>
         )
+    }
+
+    componentWillReceiveProps(props) {
+        this.setState({ videoId: props.videoId })
     }
 
     iframe() {
@@ -44,18 +48,19 @@ class Player extends React.Component {
                 title={title}
                 width={width}
                 height={height}
-                src={`https://www.youtube.com/embed/${videoId}`}
+                src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-            ></iframe>)
+            ></iframe>
+        )
     }
 }
 
 export default Player
 
 Player.defaultProps = {
-    videoId: '',
+    videoId: null,
     title: '',
     player: {
         width: 760,

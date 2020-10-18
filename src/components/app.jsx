@@ -9,15 +9,27 @@ import youtubeSearch from '../api/youtubeSearch'
 
 
 class App extends React.Component {
-    state = { videos: [] }
+    state = {
+        videos: [],
+        playingVideo: {
+            id: null,
+            title: null,
+            description: null
+        }
+    }
+
     render() {
+        const {
+            id: videoId,
+            title
+        } = this.state.playingVideo
 
         return (
             <Container>
                 <SearchBar onSubmit={this.onSearchSubmit} />
 
                 <InnerContainer>
-                    <VideoPlayer />
+                    <VideoPlayer videoId={videoId} title={title} />
                     <Suggestions videos={this.state.videos} playVideo={this.playVideo} />
                 </InnerContainer>
             </Container>
@@ -32,8 +44,17 @@ class App extends React.Component {
         this.setState({ videos: this.extractUsefuldata(response.data.items) })
     }
 
-    playVideo = videoId => {
-        console.log('Play video', videoId)
+    playVideo = requestedVideoId => {
+        const {
+            title: requestedVideoTitle,
+        } = this.state.videos.find(({ videoId }) => videoId === requestedVideoId)
+
+        this.setState({
+            playingVideo: {
+                id: requestedVideoId,
+                title: requestedVideoTitle
+            }
+        })
     }
 
 

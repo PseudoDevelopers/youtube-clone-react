@@ -4,18 +4,35 @@ import './index.scss'
 
 
 class VideoPlayer extends React.Component {
-    state = {  }
+    state = {
+        videoId: this.props.videoId,
+        title: this.props.title,
+    }
+
     render() {
-        return <div className="skeleton">
-            {/* <Player videoId="pRpeEdMmmQ0" /> */}
-            <Player videoId="" />
-            
-            <div id="current-video-details">
-                <h2></h2>
-                <p></p>
+        return (
+            <div className={this.state.videoId !== null ? '' : 'skeleton'}>
+                <Player videoId={this.state.videoId} />
+
+                <div id="current-video-details">
+                    <h2>{this.state.title}</h2>
+                </div>
             </div>
-        </div>
+        )
+    }
+
+    componentWillReceiveProps({ videoId, title }) {
+        this.setState({
+            videoId: videoId,
+            title: title,
+        })
     }
 }
 
 export default VideoPlayer
+
+
+VideoPlayer.defaultProps = {
+    videoId: null,
+    title: null
+}

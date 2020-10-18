@@ -1,5 +1,9 @@
 @import '../variables';
 
+.current-video-details h2 {
+    max-width: 750px;
+}
+
 .skeleton {
     h2 {
         width: 350px;
