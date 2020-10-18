@@ -1,58 +1,64 @@
 import React from 'react'
 import './Video.scss'
 
-import Link from '../Common/Link'
-
-
 
 class Video extends React.Component {
     state = {
         thumbnailLink: this.props.thumbnailLink,
         title: this.props.title,
-        videoLink: this.props.videoLink,
-        channelLink: this.props.channelLink,
-        channelName: this.props.channelName
+        videoId: this.props.videoId,
+        channelId: this.props.channelId,
+        channelName: this.props.channelName,
+
+        playVideo: this.props.playVideo
     }
 
     render() {
         const {
             thumbnailLink,
             title,
-            videoLink,
-            channelLink,
+            videoId,
+            channelId,
             channelName
         } = this.state
 
-        const isSkeleton = videoLink === '' ? 'skeleton' : ''
+        const isSkeleton = videoId === '' ? 'skeleton' : ''
 
         return (
             <div className={`video ${isSkeleton}`}>
-                    <Link href={videoLink}>
-                        <img src={thumbnailLink} alt={title} />
-                    </Link>
+                <div href={videoId} onClick={this.playVideo}>
+                    <img src={thumbnailLink} alt={title} />
+                </div>
 
                 <div className="details">
-                    <Link href={videoLink}>
-                        <h3 className="title">{title}</h3>
-                    </Link>
+                    <h3 className="title" onClick={this.playVideo}>{title}</h3>
 
-                    <Link
+                    <a
                         className="channel-name"
-                        href={channelLink}
-                        text={channelName}
-                    />
+                        href={`https://www.youtube.com/channel/${channelId}`}
+                        target="_blank"
+                    >
+                        {channelName}
+                    </a>
                 </div>
             </div>
         )
+    }
+
+    playVideo = () => {
+        if (this.state.playVideo !== null)
+            this.state.playVideo(this.state.videoId)
     }
 }
 
 Video.defaultProps = {
     thumbnailLink: '',
     title: '',
-    videoLink: '',
-    channelLink: '',
-    channelName: ''
+    videoId: '',
+    channelId: '',
+    channelName: '',
+
+    playVideo: null
 }
 
 export default Video
